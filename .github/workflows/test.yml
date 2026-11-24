@@ -22,7 +22,7 @@ jobs:
     name: Frontend (TS, Lint & Format)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-node-env
 
       - run: pnpm run typecheck:fe
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-node-env
 
       - run: pnpm exec playwright install --with-deps
@@ -51,7 +51,7 @@ jobs:
     name: Backend (Rust, Clippy & Tests)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
         with:
