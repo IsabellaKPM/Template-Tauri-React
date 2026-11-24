@@ -99,8 +99,8 @@ src-tauri/
 ## Template-specific notes
 
 - Auth, users admin and the API client mirror the Next.js template and talk to the NestJS template (HttpOnly cookie auth). Keep them in sync when either side changes.
-- The API base URL is `VITE_API_URL` (default `http://localhost:3001`). The backend's `CORS_ORIGINS` must include the app origin (`http://localhost:1420` in dev).
-- WARNING: the backend sets cookies with `SameSite=Strict`. In a bundled app the webview origin (`tauri://localhost`, `http://tauri.localhost` on Windows) is cross-site to the API, so the browser won't send the cookies. Dev works; for release builds either serve the API from a matching site, relax the cookie policy in the backend, or move requests through Rust (e.g. `tauri-plugin-http`).
+- The API base URL is `VITE_API_URL` (default `http://localhost:3001`). The backend's `CORS_ORIGINS` must include the app origin.
+- WARNING: the backend sets cookies with `SameSite=Strict`, which the webview drops in bundled apps (cross-site origin). Inside Tauri, `axios.ts` therefore uses the `fetch` adapter backed by `tauri-plugin-http` (Rust cookie jar, no CORS). Every API origin must be allowed in the `http:default` scope in `capabilities/default.json`; don't replace this adapter with the webview's XHR/fetch.
 - Use `pnpm start:dev` to test anything that touches Tauri APIs; `pnpm start:fe` runs in a plain browser where `@tauri-apps/api` calls fail.
 - Never edit `src-tauri/target/`, `src-tauri/icons/` (regenerate with `tauri icon`), or `Cargo.lock` by hand.
 - Keep Tauri capabilities minimal: grant only the permissions a command or plugin actually needs.
