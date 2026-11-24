@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { ROUTES } from "@/shared/lib/routes";
 import Logo from "./Logo";
+import { HeaderNav } from "./HeaderNav";
+import { HeaderAuthActions } from "./HeaderAuthActions";
 import { ThemeToggle } from "./ThemeToggle";
 
 export default function Header() {
@@ -9,22 +9,11 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Logo />
 
-        <nav className="flex items-center gap-6 text-sm font-medium">
-          <Link
-            to={ROUTES.home}
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Tab One
-          </Link>
-          <Link
-            to={ROUTES.home}
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Tab Two
-          </Link>
-        </nav>
-
-        <ThemeToggle />
+        <div className="flex items-center gap-6">
+          <HeaderNav />
+          <HeaderAuthActions />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
