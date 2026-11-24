@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly APP_ENV: string;
   readonly TAURI_DEV_HOST: string;
+  readonly VITE_API_URL: string;
 }
 
 interface ImportMeta {
