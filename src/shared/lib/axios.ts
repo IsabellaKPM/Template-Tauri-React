@@ -1,13 +1,18 @@
 import axios, { isAxiosError } from "axios";
+import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
 import { env } from "@/shared/lib/env";
 import { API_ENDPOINTS } from "@/shared/lib/apiEndpoints";
 
+const isTauri = "__TAURI_INTERNALS__" in window;
+
+// WARNING: inside Tauri, requests go through Rust (reqwest) instead of the webview. The webview origin is cross-site to the API, so it would drop the SameSite=Strict auth cookies; the Rust cookie jar keeps them and also skips CORS.
 export const apiClient = axios.create({
   baseURL: env.VITE_API_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
+  ...(isTauri && { adapter: "fetch", env: { fetch: tauriFetch } }),
 });
 
 const { auth } = API_ENDPOINTS.client;
