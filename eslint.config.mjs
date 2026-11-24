@@ -9,6 +9,8 @@ export default [
   {
     ignores: [
       "dist/**",
+      "playwright-report/**",
+      "test-results/**",
       "node_modules/**",
       "src-tauri/**",
       "eslint.config.mjs",
